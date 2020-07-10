@@ -51,7 +51,7 @@ Here are some results from this algorithm:<br><br>
 * Define the Loss so the the Neural Network can reproduce the original image with important features and without trivial details. For instance, in the Eiffel Towel scene above, the important objects are the tower, the sky, trees, etc, and trivial details are people and vehicles.
 * Texture Loss for a specific layer l:<br>
  <img src="Formula/formula_1.gif"><br>
- <img src = "Formula/comment_1.gif"><br>
+ <img src = "Formula/comments_1.gif"><br>
 * This is the Content Loss for activations of 1 layer in the Neural Network. The deeper the layer, the more abstract the generated image is (due to feature extraction and more condensed information in deeper layers). We want to avoid having the generated image which looks exactly like the content image, as it is NOT our main focus. 
 * We DO NOT want the algorithm to be copy-paste! As a result, we should use deeper convolutional layers for more abstract information and **more room for creation and creativity**. In my algorithm, I used the activations in Block 4-Convolution 2 to define the loss function, as it is not too simple for the Neural Network to simply imitate the content image, nor too abstract so that the Neural Network can generate realistic images. Please feel free to modify the activation layers yourself to see what will happen if you move to shallower/deeper activations.
 * About the formula, it is merely the L2 Loss between activations of content image the the generated image. Using this loss function for optimization will force the generated image to include important objects in the content image.
@@ -71,9 +71,9 @@ Here are some results from this algorithm:<br><br>
 
 * The formula means that in 1 layer, we are summing all the dot product of all possible permutations of any 2 channels in a specific layer l (yes, we allow duplicates so it's combinations, not permutations) to get the Gram matrix for layer l. In the code, I implemented this using rolling technique, roll the 3D tensor HxWxC into 2D matrix (HxW)xC and then multiply the matrix with its own transpose to get the Gram matrix.
 * After that, we sum all the L2 Loss of Generated Image's Gram matrix and Style Image's Gram matrix across all channels to get the accumulated Perceptual/Style Loss.
-* The layers for stylistic activations that I used are b1_conv1, b2_conv1, b3_conv1, b4_conv1, b5_conv1, all with equal weights.
+* The layers for stylistic activations that I used are b1_conv1, b2_conv1, b3_conv1, b4_conv1, b5_conv1, all with equal weights.<br><br>
 
-**3) Final Loss:**
+**3) Final Loss:**<br><br>
 <img src="Formula/formula_4.gif"><br>
 * This loss define the objective optimization. We combine the texture loss and the style loss defined above to define this loss function. This function allows the gradient descent to optimize the pixels of the blank paper so that the generated image both has the main structure and objects in the content image and the style of the style image.
 * In my experiments, I first give the content more weights as we should first get the main structure of the image, and then give the style more weights to transfer the image to a particular style. I encourage you to experiment the weights (gamma1 and gamma2) yourself to see how it works.
