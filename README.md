@@ -47,7 +47,7 @@ Here are some results from this algorithm:<br><br>
 * This algorithm relies on pretrained kernels of VGG19 CNN, the Gram matrix to analyze the style of each image, and the optimization on all pixels of the starting image (blank paper initially), which each pixels is the optimized parameter.
 * VGG19 Kernels have been trained on ImageNet data set for regconition tasks, and they are useful for this algorithm due to their capability in feature extraction. If you are unfamiliar with the idea of how Kernels works, please refer to my repository "Visualizing Convolutional Neural Network". The pretrained kernels were used to analyze texture of the original image to produce important objects in the image using Content Loss, combined with Gram Matrix to reproduce the object in the origional image with the style of the artistic image.<br><br>
 
-1) Texture Loss:
+**1) Texture Loss:**
 * Define the Loss so the the Neural Network can reproduce the original image with important features and without trivial details. For instance, in the Eiffel Towel scene above, the important objects are the tower, the sky, trees, etc, and trivial details are people and vehicles.
 * Texture Loss for a specific layer l:<br>
  <img src="Formula/formula_1.gif"><br>
@@ -57,7 +57,7 @@ Here are some results from this algorithm:<br><br>
 * About the formula, it is merely the L2 Loss between activations of content image the the generated image. Using this loss function for optimization will force the generated image to include important objects in the content image.
 * The height, widgth, and depth of the activation (3D tensor) are included to normalize the effect of the activation size, as we want different L2 errors to have the same effect in the accumulated Content Loss function. For e.g, we dont want the activation with bigger size (which inheritedly has more elements in the tensor) to have more effect on the optimization.
 
-2) Perceptual Loss:
+**2) Perceptual Loss:**
 * **The core of the algorithm**, defined by Gram matrices.
 * Use to analyze the difference between the style of the artistic image and the generated image. Gram matrices are utilized to get the style of each matrix, and we again apply L2 loss between the Generated image's Gram matrix and the Artistic image's Gram matrix.
 *  Gram matrix for 1 layer:<br>
@@ -73,9 +73,9 @@ Here are some results from this algorithm:<br><br>
 * After that, we sum all the L2 Loss of Generated Image's Gram matrix and Style Image's Gram matrix across all channels to get the accumulated Perceptual/Style Loss.
 * The layers for stylistic activations that I used are b1_conv1, b2_conv1, b3_conv1, b4_conv1, b5_conv1, all with equal weights.
 
-* Final Loss:
+**3) Final Loss:**
 <img src="Formula/formula_4.gif"><br>
-
+* This loss define the objective optimization. We combine the texture loss and the style loss defined above to define this loss function. This function allows the gradient descent to optimize the pixels of the blank paper so that the generated image both has the main structure and objects in the content image and the style of the style image.
 * In my experiments, I first give the content more weights as we should first get the main structure of the image, and then give the style more weights to transfer the image to a particular style. I encourage you to experiment the weights (gamma1 and gamma2) yourself to see how it works.
 
 # Reference:
