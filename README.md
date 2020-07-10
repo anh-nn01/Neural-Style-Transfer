@@ -79,13 +79,4 @@ Here are some results from this algorithm:<br><br>
 * In my experiments, I first give the content more weights as we should first get the main structure of the image, and then give the style more weights to transfer the image to a particular style. I encourage you to experiment the weights (gamma1 and gamma2) yourself to see how it works.
 
 # Reference:
-@misc{gatys2015neural,
-    title={A Neural Algorithm of Artistic Style},
-    author={Leon A. Gatys and Alexander S. Ecker and Matthias Bethge},
-    year={2015},
-    eprint={1508.06576},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV}
-}
-https://arxiv.org/abs/1508.06576
-
+Gatys, Leon A., et al. “A Neural Algorithm of Artistic Style.” ArXiv.org, 2 Sept. 2015, arxiv.org/abs/1508.06576.
